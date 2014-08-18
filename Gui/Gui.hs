@@ -4,17 +4,19 @@ module Gui.Gui
        ( runGui
        ) where
 
-import           Control.Concurrent
+import           Control.Concurrent (forkIO)
 import           Control.Exception
 import           Data.IORef
 import           Data.Text          (Text)
 import qualified Data.Text          as T
+import           Foundation
 import           Graphics.QML
-import           Prelude
+import           Import
 import           System.FilePath
 
-runGui :: IO ()
-runGui = do
+runGui :: App -> IO ()
+runGui app = do
+    let writeChan = socketEvents app
     state <- newIORef ""
     skey  <- newSignalKey
     clazz <- newClass [
@@ -27,6 +29,8 @@ runGui = do
             _ <- forkIO $ do
                 let out = T.take 1000 . T.pack . show $ product [1..n]
                 _ <- evaluate out
+                atomically $ writeTChan writeChan $
+                  "Factorial has been calculated, result: "  <> out
                 writeIORef state out
                 fireSignal skey obj
             return ())]

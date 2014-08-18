@@ -30,7 +30,7 @@ main = do
             LevelError
             (toLogStr $ "Exception from Warp: " ++ show e)
         } application
-    runGui
+    runGui app
   where shouldLog' = Warp.defaultShouldDisplayException
         load = fromArgs parseExtra
         getApp = makeApplication
