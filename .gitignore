@@ -13,3 +13,6 @@ yesod-devel/
 cabal.sandbox.config
 .DS_Store
 *.swp
+
+elm/elm_dependencies/*
+elm/cache

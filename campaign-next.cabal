@@ -20,7 +20,6 @@ library
                      Settings.StaticFiles
                      Settings.Development
                      Handler.Home
-                     Gui.Gui
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

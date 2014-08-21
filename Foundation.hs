@@ -2,7 +2,7 @@
 {-# LANGUAGE TypeFamilies    #-}
 module Foundation where
 
-import           Control.Concurrent.STM
+import           Control.Concurrent.STM      (TChan)
 import           Data.Text                   (Text)
 import qualified Database.Persist
 import           Database.Persist.Sql        (SqlPersistT)

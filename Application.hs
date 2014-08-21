@@ -42,7 +42,7 @@ mkYesodDispatch "App" resourcesApp
 -- performs initialization and creates a WAI application. This is also the
 -- place to put your migrate statements to have automatic database
 -- migrations handled by Yesod.
-makeApplication :: AppConfig DefaultEnv Extra -> IO (Application, LogFunc, App)
+makeApplication :: AppConfig DefaultEnv Extra -> IO (Application, LogFunc)
 makeApplication conf = do
     foundation <- makeFoundation conf
 
@@ -58,7 +58,7 @@ makeApplication conf = do
     -- Create the WAI application and apply middlewares
     app <- toWaiAppPlain foundation
     let logFunc = messageLoggerSource foundation (appLogger foundation)
-    return (logWare $ defaultMiddlewaresNoLogging app, logFunc, foundation)
+    return (logWare $ defaultMiddlewaresNoLogging app, logFunc)
 
 -- | Loads up any necessary settings, creates your foundation datatype, and
 -- performs some initialization.
@@ -100,5 +100,5 @@ getApplicationDev =
         { csParseExtra = parseExtra
         }
     makeApp :: AppConfig DefaultEnv Extra -> IO (Application, LogFunc)
-    makeApp conf = do (app, logFunc, _) <- makeApplication conf
+    makeApp conf = do (app, logFunc) <- makeApplication conf
                       return (app, logFunc)
