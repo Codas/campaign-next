@@ -70,7 +70,6 @@ library
                  , yesod-websockets              >= 0.1.1.2
                  , process                       >= 1.2
                  , filepath
-                 , hsqml                         >= 0.3.1.1
                  , esqueleto                     >= 1.4.4
                  , stm                           >= 2.4.3
                  , stm-lifted
