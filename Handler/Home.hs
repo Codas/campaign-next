@@ -23,14 +23,15 @@ compileElm file = do (_, outHandle, _, processHandle) <- createProcess elmComman
                      return (status, out)
   where elmCommand = (proc "elm" options) { cwd = Just "elm" }
         options = ["-m", "--set-runtime=static/js/elm-runtime.js", "-b"
-                  ,"../static/elm/", "-c", "../static/tmp/", file]
+                  ,"../static/js/", "-c", "../static/tmp/", "--only-js", file]
 
 sendElm :: String -> Handler Html
-sendElm file = do (status, out) <- liftIO $ compileElm (file ++ ".elm")
-                  case status of
-                    ExitFailure 1 -> defaultLayout [whamlet|#{out}|]
-                    _ -> sendFile "text/html" (elmPath </> file ++ ".html")
-  where elmPath = "static" </> "elm"
+sendElm file = sendFile "text/html" (elmPath </> file ++ ".html")
+                  -- (status, out) <- liftIO $ compileElm (file ++ ".elm")
+                  -- case status of
+                  --     ExitFailure 1 -> defaultLayout [whamlet|#{out}|]
+                  --       _ -> sendFile "text/html" (elmPath </> file ++ ".html")
+  where elmPath = "static" </> "html"
 
 -- This is a handler function for the GET request method on the HomeR
 -- resource pattern. All of your resource patterns are defined in

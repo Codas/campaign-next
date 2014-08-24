@@ -1,0 +1,101 @@
+/*
+ *
+ * Uncomment and set these variables to customize the grid.
+ *
+ * :root {
+ *  --half-gutter-width: 0.5rem;
+ *  --gutter-compensation: -0.5rem;
+ *  --outer-margin: 2rem;
+ * }
+*/
+
+.flex-margin {
+  margin: 0.25em;
+  padding: 0.25em;
+}
+
+.viewport {
+  height: 100%;
+  width: 100%;
+}
+
+.hbox {
+  /* current syntax */
+  display: -webkit-flex;
+  display:    -moz-flex;
+  display:     -ms-flex;
+  display:         flex;
+
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.space-between {
+  /* current syntax */
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  -ms-justify-content: space-between;
+  justify-content: space-between;
+}
+
+.main {
+  /* current syntax */
+  -webkit-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+section {
+  .main;
+  .hbox;
+  .space-between;
+}
+
+nav, article, aside {
+  .flex-margin;
+  flex: 1;
+}
+
+.vbox {
+  display: -webkit-flex;
+  display:    -moz-flex;
+  display:     -ms-flex;
+  display:         flex;
+
+  -webkit-flex-direction: column;
+  -moz-flex-direction:    column;
+  -ms-flex-direction:     column;
+  flex-direction:         column;
+}
+
+.flex-1, .flex-2, .flex-3, 
+.flex-4, .flex-5, .flex-6 {
+  .flex-margin;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.flex-3 {
+  flex: 3;
+}
+
+.flex-4 {
+  flex: 4;
+}
+
+.flex-5 {
+  flex: 5;
+}
+
+.flex-6 {
+  flex: 6;
+}
