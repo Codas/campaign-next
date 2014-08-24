@@ -23,7 +23,9 @@ type State =
     }
 
 type VisualState =
-    { mainFocus : FocusArea
+    { mainFocus : String
+    , mapPosition : { zoomLevel: Float , moveX: Float , moveY: Float }
+    , mapSize : { height: Float, width: Float }
     }
 
 type DataState = {}
@@ -31,9 +33,6 @@ type DataState = {}
 type MapState =
     { activeBackground : Background
     , availableBackgrounds : [Background]
-    , zoomLevel: Float
-    , moveX: Float
-    , moveY: Float
     }
 
 type Background = 
@@ -43,10 +42,6 @@ type Background =
     , width: Float
     }
 
-    
-data FocusArea
-    = FocusCharSheet
-    | FocusMap
 
 emptyState : State
 emptyState =
@@ -69,21 +64,20 @@ emptyMapState =
     in
     { activeBackground = faerunBackground
     , availableBackgrounds = [ faerunBackground ]
-    , zoomLevel = 1
-    , moveX = 0
-    , moveY = 0
     }
 
 emptyVisualState : VisualState
-emptyVisualState =
-    { mainFocus = FocusMap }
+emptyVisualState = { mainFocus = "map"
+                   , mapPosition = { zoomLevel = 1 , moveX = 0 , moveY = 0 }
+                   , mapSize = { width = 0, height = 0 }
+                   }
 
 ---- UPDATE -----
 
 data Action
     = NoOp
     | SetMapBackround String
-    | SetFocus FocusArea
+    | SetFocus String
     | MapZoom MapZoomAction
 
 data MapZoomAction
@@ -107,16 +101,19 @@ step action state =
         let vState = state.visualState
         in { state | visualState <- { vState | mainFocus <- f } } 
     MapZoom zoomAction ->
-        let mState = state.mapState
+        let vState = state.visualState
+            mState = vState.mapPosition
             currentLevel = mState.zoomLevel
+            changeMapPosition mp =
+                { state | visualState <- { vState | mapPosition <- mp} }
             zoomMap : Float -> State
-            zoomMap f = { state | mapState <- { mState | zoomLevel <- (currentLevel * f) } }
-            moveMapX n = { state | mapState <- { mState | moveX <- (mState.moveX + n) } }
-            moveMapY n = { state | mapState <- { mState | moveY <- (mState.moveY + n) } }
+            zoomMap f = changeMapPosition { mState | zoomLevel <- (currentLevel * f) }
+            moveMapX n = changeMapPosition { mState | moveX <- (mState.moveX + n) }
+            moveMapY n = changeMapPosition { mState | moveY <- (mState.moveY + n) }
         in
         case zoomAction of
           ZoomIn -> zoomMap 1.1
-          ZoomOut -> zoomMap 0.9
+          ZoomOut -> zoomMap (1/1.1)
           MoveUp -> moveMapY 100
           MoveRight -> moveMapX -100
           MoveDown -> moveMapY -100
@@ -130,25 +127,25 @@ view : State -> Html
 view state =
     node "div" ["className" := "vbox viewport"] []
       [ tabBarHtml state
-          [ (FocusCharSheet, "Character Sheets")
-          , (FocusMap, "Map")
+          [ ("charSheets", "Character Sheets")
+          , ("map", "Map")
           ]
       , node "div" ["className" := "tab-content main hbox space-between"] []
-          [ tabPane (inFocus state FocusCharSheet)
+          [ tabPane (inFocus state "charSheet")
               (charSheetHtml state)
-          , tabPane (inFocus state FocusMap)
+          , tabPane (inFocus state "map")
               (mapHtml state)
           ]
       ]
 
-tabBarHtml : State -> [(FocusArea, String)] -> Html
+tabBarHtml : State -> [(String, String)] -> Html
 tabBarHtml state cs =
     let activeIfFocus f = if inFocus state f then "active" else ""
-        linkTag : FocusArea -> String -> Html
+        linkTag : String -> String -> Html
         linkTag f str = eventNode "a" ["href" := "javascript:void(0);"] []
                              [onclick actions.handle (\_ -> SetFocus f)]
                              [text str] 
-        createTabLi : (FocusArea, String) -> Html
+        createTabLi : (String, String) -> Html
         createTabLi (f, s) =
             node "li" ["className" := (activeIfFocus f)] []
               [linkTag f s]
@@ -162,11 +159,12 @@ charSheetHtml state =
 mapHtml : State -> [Html]
 mapHtml state =
     let mState = state.mapState
+        vmState = state.visualState.mapPosition
         bg = mState.activeBackground
         mapBG = "url('" ++ bg.url ++"')"
-        scaleFactor = mState.zoomLevel
-        translateX = px mState.moveX
-        translateY = px mState.moveY
+        scaleFactor = vmState.zoomLevel
+        translateX = px vmState.moveX
+        translateY = px vmState.moveY
         translate = "translate(" ++ translateX ++ ", " ++ translateY ++ ")"
         scale = "scale(" ++ (show scaleFactor) ++")"
         transform = join " " [translate, scale]
@@ -224,7 +222,7 @@ btnGroup cs = node "div" ["className" := "btn-group"] [] cs
 
 
 ---- HTML AND STATE HELPER ---
-inFocus : State -> FocusArea -> Bool
+inFocus : State -> String -> Bool
 inFocus state focus = state.visualState.mainFocus == focus
 
 
@@ -245,12 +243,36 @@ state = foldp step startingState actions.signal
 
 -- load state from local storage or from the server
 startingState : State
-startingState = emptyState
+startingState = Maybe.maybe emptyState id getStorage
 
 -- actions from user input. Initialized as NoOp
 actions : Input Action
 actions = Input.input NoOp
 
+
+-- interactions with localStorage to save app state (type alias support coming soon!)
+port getStorage : Maybe 
+         { dataState: {}
+         , mapState: { activeBackground:      { name: String, url: String, height: Float, width: Float }
+                     , availableBackgrounds: [{ name: String, url: String, height: Float, width: Float }]
+                     }
+         , visualState: { mainFocus: String
+                        , mapPosition: { zoomLevel: Float , moveX: Float , moveY: Float }
+                        , mapSize: { height: Float, width: Float }
+                        }
+         }
+
+port setStorage : Signal 
+         { dataState: {}
+         , mapState: { activeBackground:      { name: String, url: String, height: Float, width: Float }
+                     , availableBackgrounds: [{ name: String, url: String, height: Float, width: Float }]
+                     }
+         , visualState: { mainFocus: String
+                        , mapPosition : { zoomLevel: Float , moveX: Float , moveY: Float }
+                        , mapSize: { height: Float, width: Float }
+                        }
+         }
+port setStorage = state
 
 -- WebSocket connection to the server for actions transmissions
 -- socket = WebSocket.connect "ws://127.0.0.1:3000" (constant "no name")

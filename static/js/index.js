@@ -1820,6 +1820,33 @@ Elm.Index.make = function (_elm) {
    var Window = Elm.Window.make(_elm);
    var _op = {};
    var $undefined = $undefined;
+   var getStorage = Native.Ports.portIn("getStorage",
+   function (v) {
+      return v === null ? Maybe.Nothing : Maybe.Just(typeof v === "object" && "dataState" in v && "mapState" in v && "visualState" in v ? {_: {}
+                                                                                                                                          ,dataState: typeof v.dataState === "object" ? {_: {}} : _E.raise("invalid input, expecting JSObject [] but got " + v.dataState)
+                                                                                                                                          ,mapState: typeof v.mapState === "object" && "activeBackground" in v.mapState && "availableBackgrounds" in v.mapState ? {_: {}
+                                                                                                                                                                                                                                                                  ,activeBackground: typeof v.mapState.activeBackground === "object" && "name" in v.mapState.activeBackground && "url" in v.mapState.activeBackground && "height" in v.mapState.activeBackground && "width" in v.mapState.activeBackground ? {_: {}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ,name: typeof v.mapState.activeBackground.name === "string" || typeof v.mapState.activeBackground.name === "object" && v.mapState.activeBackground.name instanceof String ? v.mapState.activeBackground.name : _E.raise("invalid input, expecting JSString but got " + v.mapState.activeBackground.name)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ,url: typeof v.mapState.activeBackground.url === "string" || typeof v.mapState.activeBackground.url === "object" && v.mapState.activeBackground.url instanceof String ? v.mapState.activeBackground.url : _E.raise("invalid input, expecting JSString but got " + v.mapState.activeBackground.url)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ,height: typeof v.mapState.activeBackground.height === "number" ? v.mapState.activeBackground.height : _E.raise("invalid input, expecting JSNumber but got " + v.mapState.activeBackground.height)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ,width: typeof v.mapState.activeBackground.width === "number" ? v.mapState.activeBackground.width : _E.raise("invalid input, expecting JSNumber but got " + v.mapState.activeBackground.width)} : _E.raise("invalid input, expecting JSObject [\"name\",\"url\",\"height\",\"width\"] but got " + v.mapState.activeBackground)
+                                                                                                                                                                                                                                                                  ,availableBackgrounds: _U.isJSArray(v.mapState.availableBackgrounds) ? _L.fromArray(v.mapState.availableBackgrounds.map(function (v) {
+                                                                                                                                                                                                                                                                     return typeof v === "object" && "name" in v && "url" in v && "height" in v && "width" in v ? {_: {}
+                                                                                                                                                                                                                                                                                                                                                                  ,name: typeof v.name === "string" || typeof v.name === "object" && v.name instanceof String ? v.name : _E.raise("invalid input, expecting JSString but got " + v.name)
+                                                                                                                                                                                                                                                                                                                                                                  ,url: typeof v.url === "string" || typeof v.url === "object" && v.url instanceof String ? v.url : _E.raise("invalid input, expecting JSString but got " + v.url)
+                                                                                                                                                                                                                                                                                                                                                                  ,height: typeof v.height === "number" ? v.height : _E.raise("invalid input, expecting JSNumber but got " + v.height)
+                                                                                                                                                                                                                                                                                                                                                                  ,width: typeof v.width === "number" ? v.width : _E.raise("invalid input, expecting JSNumber but got " + v.width)} : _E.raise("invalid input, expecting JSObject [\"name\",\"url\",\"height\",\"width\"] but got " + v);
+                                                                                                                                                                                                                                                                  })) : _E.raise("invalid input, expecting JSArray but got " + v.mapState.availableBackgrounds)} : _E.raise("invalid input, expecting JSObject [\"activeBackground\",\"availableBackgrounds\"] but got " + v.mapState)
+                                                                                                                                          ,visualState: typeof v.visualState === "object" && "mainFocus" in v.visualState && "mapPosition" in v.visualState && "mapSize" in v.visualState ? {_: {}
+                                                                                                                                                                                                                                                                                            ,mainFocus: typeof v.visualState.mainFocus === "string" || typeof v.visualState.mainFocus === "object" && v.visualState.mainFocus instanceof String ? v.visualState.mainFocus : _E.raise("invalid input, expecting JSString but got " + v.visualState.mainFocus)
+                                                                                                                                                                                                                                                                                            ,mapPosition: typeof v.visualState.mapPosition === "object" && "zoomLevel" in v.visualState.mapPosition && "moveX" in v.visualState.mapPosition && "moveY" in v.visualState.mapPosition ? {_: {}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ,zoomLevel: typeof v.visualState.mapPosition.zoomLevel === "number" ? v.visualState.mapPosition.zoomLevel : _E.raise("invalid input, expecting JSNumber but got " + v.visualState.mapPosition.zoomLevel)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ,moveX: typeof v.visualState.mapPosition.moveX === "number" ? v.visualState.mapPosition.moveX : _E.raise("invalid input, expecting JSNumber but got " + v.visualState.mapPosition.moveX)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ,moveY: typeof v.visualState.mapPosition.moveY === "number" ? v.visualState.mapPosition.moveY : _E.raise("invalid input, expecting JSNumber but got " + v.visualState.mapPosition.moveY)} : _E.raise("invalid input, expecting JSObject [\"zoomLevel\",\"moveX\",\"moveY\"] but got " + v.visualState.mapPosition)
+                                                                                                                                                                                                                                                                                            ,mapSize: typeof v.visualState.mapSize === "object" && "height" in v.visualState.mapSize && "width" in v.visualState.mapSize ? {_: {}
+                                                                                                                                                                                                                                                                                                                                                                                                                           ,height: typeof v.visualState.mapSize.height === "number" ? v.visualState.mapSize.height : _E.raise("invalid input, expecting JSNumber but got " + v.visualState.mapSize.height)
+                                                                                                                                                                                                                                                                                                                                                                                                                           ,width: typeof v.visualState.mapSize.width === "number" ? v.visualState.mapSize.width : _E.raise("invalid input, expecting JSNumber but got " + v.visualState.mapSize.width)} : _E.raise("invalid input, expecting JSObject [\"height\",\"width\"] but got " + v.visualState.mapSize)} : _E.raise("invalid input, expecting JSObject [\"mainFocus\",\"mapPosition\",\"mapSize\"] but got " + v.visualState)} : _E.raise("invalid input, expecting JSObject [\"dataState\",\"mapState\",\"visualState\"] but got " + v));
+   });
    var inFocus = F2(function (state,
    focus) {
       return _U.eq(state.visualState.mainFocus,
@@ -1934,28 +1961,30 @@ Elm.Index.make = function (_elm) {
          switch (action.ctor)
          {case "MapZoom":
             return function () {
-                 var mState = state.mapState;
+                 var vState = state.visualState;
+                 var mState = vState.mapPosition;
                  var currentLevel = mState.zoomLevel;
-                 var zoomMap = function (f) {
-                    return _U.replace([["mapState"
-                                       ,_U.replace([["zoomLevel"
-                                                    ,currentLevel * f]],
-                                       mState)]],
+                 var changeMapPosition = function (mp) {
+                    return _U.replace([["visualState"
+                                       ,_U.replace([["mapPosition"
+                                                    ,mp]],
+                                       vState)]],
                     state);
+                 };
+                 var zoomMap = function (f) {
+                    return changeMapPosition(_U.replace([["zoomLevel"
+                                                         ,currentLevel * f]],
+                    mState));
                  };
                  var moveMapX = function (n) {
-                    return _U.replace([["mapState"
-                                       ,_U.replace([["moveX"
-                                                    ,mState.moveX + n]],
-                                       mState)]],
-                    state);
+                    return changeMapPosition(_U.replace([["moveX"
+                                                         ,mState.moveX + n]],
+                    mState));
                  };
                  var moveMapY = function (n) {
-                    return _U.replace([["mapState"
-                                       ,_U.replace([["moveY"
-                                                    ,mState.moveY + n]],
-                                       mState)]],
-                    state);
+                    return changeMapPosition(_U.replace([["moveY"
+                                                         ,mState.moveY + n]],
+                    mState));
                  };
                  return function () {
                     switch (action._0.ctor)
@@ -1970,9 +1999,9 @@ Elm.Index.make = function (_elm) {
                        case "ZoomIn":
                        return zoomMap(1.1);
                        case "ZoomOut":
-                       return zoomMap(0.9);}
+                       return zoomMap(1 / 1.1);}
                     _E.Case($moduleName,
-                    "between lines 117 and 124");
+                    "between lines 114 and 121");
                  }();
               }();
             case "NoOp": return state;
@@ -2028,7 +2057,7 @@ Elm.Index.make = function (_elm) {
                     _v6._0,
                     _v6._1)]));}
                _E.Case($moduleName,
-               "between lines 153 and 154");
+               "between lines 150 and 151");
             }();
          };
          return A4(Html.node,
@@ -2045,16 +2074,13 @@ Elm.Index.make = function (_elm) {
    });
    var mapHtml = function (state) {
       return function () {
-         var mState = state.mapState;
-         var bg = mState.activeBackground;
-         var mapBG = _L.append("url(\'",
-         _L.append(bg.url,"\')"));
-         var scaleFactor = mState.zoomLevel;
+         var vmState = state.visualState.mapPosition;
+         var scaleFactor = vmState.zoomLevel;
          var scale = _L.append("scale(",
          _L.append(String.show(scaleFactor),
          ")"));
-         var translateX = Html.px(mState.moveX);
-         var translateY = Html.px(mState.moveY);
+         var translateX = Html.px(vmState.moveX);
+         var translateY = Html.px(vmState.moveY);
          var translate = _L.append("translate(",
          _L.append(translateX,
          _L.append(", ",
@@ -2063,6 +2089,10 @@ Elm.Index.make = function (_elm) {
          " ",
          _L.fromArray([translate
                       ,scale]));
+         var mState = state.mapState;
+         var bg = mState.activeBackground;
+         var mapBG = _L.append("url(\'",
+         _L.append(bg.url,"\')"));
          return _L.fromArray([A4(Html.node,
          "div",
          _L.fromArray([A2(Html._op[":="],
@@ -2201,33 +2231,6 @@ Elm.Index.make = function (_elm) {
                       _L.fromArray([]))]))]);
       }();
    };
-   var emptyMapState = function () {
-      var faerunBackground = {_: {}
-                             ,height: 3030
-                             ,name: "Faerun"
-                             ,url: "static/img/map/faerun.jpg"
-                             ,width: 4317};
-      return {_: {}
-             ,activeBackground: faerunBackground
-             ,availableBackgrounds: _L.fromArray([faerunBackground])
-             ,moveX: 0
-             ,moveY: 0
-             ,zoomLevel: 1};
-   }();
-   var emptyDataState = {_: {}};
-   var FocusMap = {ctor: "FocusMap"};
-   var emptyVisualState = {_: {}
-                          ,mainFocus: FocusMap};
-   var emptyState = {_: {}
-                    ,dataState: emptyDataState
-                    ,mapState: emptyMapState
-                    ,visualState: emptyVisualState};
-   var startingState = emptyState;
-   var state = A3(Signal.foldp,
-   step,
-   startingState,
-   actions.signal);
-   var FocusCharSheet = {ctor: "FocusCharSheet"};
    var view = function (state) {
       return A4(Html.node,
       "div",
@@ -2238,10 +2241,10 @@ Elm.Index.make = function (_elm) {
       _L.fromArray([A2(tabBarHtml,
                    state,
                    _L.fromArray([{ctor: "_Tuple2"
-                                 ,_0: FocusCharSheet
+                                 ,_0: "charSheets"
                                  ,_1: "Character Sheets"}
                                 ,{ctor: "_Tuple2"
-                                 ,_0: FocusMap
+                                 ,_0: "map"
                                  ,_1: "Map"}]))
                    ,A4(Html.node,
                    "div",
@@ -2250,12 +2253,10 @@ Elm.Index.make = function (_elm) {
                    "tab-content main hbox space-between")]),
                    _L.fromArray([]),
                    _L.fromArray([A2(tabPane,
-                                A2(inFocus,
-                                state,
-                                FocusCharSheet),
+                                A2(inFocus,state,"charSheet"),
                                 charSheetHtml(state))
                                 ,A2(tabPane,
-                                A2(inFocus,state,FocusMap),
+                                A2(inFocus,state,"map"),
                                 mapHtml(state))]))]));
    };
    var scene = F2(function (state,
@@ -2272,13 +2273,66 @@ Elm.Index.make = function (_elm) {
               _v22._1,
               view(state)));}
          _E.Case($moduleName,
-         "on line 240, column 5 to 57");
+         "on line 238, column 5 to 57");
       }();
    });
+   var emptyVisualState = {_: {}
+                          ,mainFocus: "map"
+                          ,mapPosition: {_: {}
+                                        ,moveX: 0
+                                        ,moveY: 0
+                                        ,zoomLevel: 1}
+                          ,mapSize: {_: {}
+                                    ,height: 0
+                                    ,width: 0}};
+   var emptyMapState = function () {
+      var faerunBackground = {_: {}
+                             ,height: 3030
+                             ,name: "Faerun"
+                             ,url: "static/img/map/faerun.jpg"
+                             ,width: 4317};
+      return {_: {}
+             ,activeBackground: faerunBackground
+             ,availableBackgrounds: _L.fromArray([faerunBackground])};
+   }();
+   var emptyDataState = {_: {}};
+   var emptyState = {_: {}
+                    ,dataState: emptyDataState
+                    ,mapState: emptyMapState
+                    ,visualState: emptyVisualState};
+   var startingState = A3(Maybe.maybe,
+   emptyState,
+   Basics.id,
+   getStorage);
+   var state = A3(Signal.foldp,
+   step,
+   startingState,
+   actions.signal);
    var main = A3(Signal.lift2,
    scene,
    state,
    Window.dimensions);
+   var setStorage = Native.Ports.portOut("setStorage",
+   Native.Ports.outgoingSignal(function (v) {
+      return {dataState: {}
+             ,mapState: {activeBackground: {name: v.mapState.activeBackground.name
+                                           ,url: v.mapState.activeBackground.url
+                                           ,height: v.mapState.activeBackground.height
+                                           ,width: v.mapState.activeBackground.width}
+                        ,availableBackgrounds: _L.toArray(v.mapState.availableBackgrounds).map(function (v) {
+                           return {name: v.name
+                                  ,url: v.url
+                                  ,height: v.height
+                                  ,width: v.width};
+                        })}
+             ,visualState: {mainFocus: v.visualState.mainFocus
+                           ,mapPosition: {zoomLevel: v.visualState.mapPosition.zoomLevel
+                                         ,moveX: v.visualState.mapPosition.moveX
+                                         ,moveY: v.visualState.mapPosition.moveY}
+                           ,mapSize: {height: v.visualState.mapSize.height
+                                     ,width: v.visualState.mapSize.width}}};
+   }),
+   state);
    var Background = F4(function (a,
    b,
    c,
@@ -2289,22 +2343,21 @@ Elm.Index.make = function (_elm) {
              ,url: b
              ,width: d};
    });
-   var MapState = F5(function (a,
-   b,
-   c,
-   d,
-   e) {
+   var MapState = F2(function (a,
+   b) {
       return {_: {}
              ,activeBackground: a
-             ,availableBackgrounds: b
-             ,moveX: d
-             ,moveY: e
-             ,zoomLevel: c};
+             ,availableBackgrounds: b};
    });
    var DataState = {_: {}};
-   var VisualState = function (a) {
-      return {_: {},mainFocus: a};
-   };
+   var VisualState = F3(function (a,
+   b,
+   c) {
+      return {_: {}
+             ,mainFocus: a
+             ,mapPosition: b
+             ,mapSize: c};
+   });
    var State = F3(function (a,
    b,
    c) {
@@ -2338,8 +2391,6 @@ Elm.Index.make = function (_elm) {
                        ,startingState: startingState
                        ,actions: actions
                        ,$undefined: $undefined
-                       ,FocusCharSheet: FocusCharSheet
-                       ,FocusMap: FocusMap
                        ,NoOp: NoOp
                        ,SetMapBackround: SetMapBackround
                        ,SetFocus: SetFocus
