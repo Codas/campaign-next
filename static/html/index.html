@@ -15,22 +15,51 @@
 </body>
 
 <script type="text/javascript">
-var storedState = localStorage.getItem('campaign-next');
-var startingState = storedState ? JSON.parse(storedState) : null;
 
-var campaignNext = Elm.fullscreen(Elm.Index, { getStorage: startingState });
-// campaignNext.ports.focus.subscribe(function(selector) {
-//     setTimeout(function() {
-//         var nodes = document.querySelectorAll(selector);
-//         if (nodes.length === 1 && document.activeElement !== nodes[0]) {
-//             nodes[0].focus()
-//         }
-//     }, 50);
-// });
+ function throttle(fn, threshhold, scope) {
+   threshhold || (threshhold = 250);
+   var last,
+   deferTimer;
+   return function () {
+     var context = scope || this;
+
+     var now = +new Date,
+     args = arguments;
+     if (last && now < last + threshhold) {
+       // hold on to it
+       clearTimeout(deferTimer);
+       deferTimer = setTimeout(function () {
+         last = now;
+         fn.apply(context, args);
+       }, threshhold);
+     } else {
+       last = now;
+       fn.apply(context, args);
+     }
+   };
+ }
+
+var storedState = localStorage.getItem('campaign-next');
+// var startingState = storedState ? JSON.parse(storedState) : null;
+var startingState = null
+
+var campaignNext = Elm.fullscreen(Elm.Index, {
+   getStorage: startingState,
+   getMapElementSize: [1000, 500]
+ });
+
+var mapId = "map-container"
+var mapElement = document.getElementById(mapId)
+campaignNext.ports.getMapElementSize.send([mapElement.offsetHeight, mapElement.offsetWidth])
+window.onresize = throttle(function (e) {
+   mapElement = document.getElementById(mapId)
+   campaignNext.ports.getMapElementSize.send([mapElement.offsetHeight, mapElement.offsetWidth])
+}, 250);
 
 campaignNext.ports.setStorage.subscribe(function(state) {
     localStorage.setItem('campaign-next', JSON.stringify(state))
 })
+
 
 </script>
 

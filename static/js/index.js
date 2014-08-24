@@ -1820,6 +1820,19 @@ Elm.Index.make = function (_elm) {
    var Window = Elm.Window.make(_elm);
    var _op = {};
    var $undefined = $undefined;
+   var getMapElementSize = Native.Ports.portIn("getMapElementSize",
+   Native.Ports.incomingSignal(function (v) {
+      return _U.isJSArray(v) ? {ctor: "_Tuple2"
+                               ,_0: typeof v[0] === "number" ? v[0] : _E.raise("invalid input, expecting JSNumber but got " + v[0])
+                               ,_1: typeof v[1] === "number" ? v[1] : _E.raise("invalid input, expecting JSNumber but got " + v[1])} : _E.raise("invalid input, expecting JSArray but got " + v);
+   }));
+   var log = Native.Ports.portOut("log",
+   Native.Ports.outgoingSignal(function (v) {
+      return v;
+   }),
+   A2(Signal.lift,
+   String.show,
+   getMapElementSize));
    var getStorage = Native.Ports.portIn("getStorage",
    function (v) {
       return v === null ? Maybe.Nothing : Maybe.Just(typeof v === "object" && "dataState" in v && "mapState" in v && "visualState" in v ? {_: {}
@@ -1942,6 +1955,25 @@ Elm.Index.make = function (_elm) {
    var MoveUp = {ctor: "MoveUp"};
    var ZoomOut = {ctor: "ZoomOut"};
    var ZoomIn = {ctor: "ZoomIn"};
+   var MapResized = F2(function (a,
+   b) {
+      return {ctor: "MapResized"
+             ,_0: a
+             ,_1: b};
+   });
+   var mapResizedActions = A2(Signal.lift,
+   function (_v0) {
+      return function () {
+         switch (_v0.ctor)
+         {case "_Tuple2":
+            return A2(MapResized,
+              _v0._0,
+              _v0._1);}
+         _E.Case($moduleName,
+         "on line 272, column 38 to 52");
+      }();
+   },
+   getMapElementSize);
    var MapZoom = function (a) {
       return {ctor: "MapZoom"
              ,_0: a};
@@ -1959,11 +1991,27 @@ Elm.Index.make = function (_elm) {
    state) {
       return function () {
          switch (action.ctor)
-         {case "MapZoom":
+         {case "MapResized":
             return function () {
                  var vState = state.visualState;
+                 var mState = vState.mapSize;
+                 var changeMapSize = function (ms) {
+                    return _U.replace([["visualState"
+                                       ,_U.replace([["mapSize",ms]],
+                                       vState)]],
+                    state);
+                 };
+                 return changeMapSize(_U.replace([["height"
+                                                  ,action._0]
+                                                 ,["width",action._1]],
+                 mState));
+              }();
+            case "MapZoom":
+            return function () {
+                 var zoomFactor = 1.2;
+                 var vState = state.visualState;
                  var mState = vState.mapPosition;
-                 var currentLevel = mState.zoomLevel;
+                 var currentZoom = mState.zoomLevel;
                  var changeMapPosition = function (mp) {
                     return _U.replace([["visualState"
                                        ,_U.replace([["mapPosition"
@@ -1971,20 +2019,32 @@ Elm.Index.make = function (_elm) {
                                        vState)]],
                     state);
                  };
-                 var zoomMap = function (f) {
-                    return changeMapPosition(_U.replace([["zoomLevel"
-                                                         ,currentLevel * f]],
-                    mState));
-                 };
                  var moveMapX = function (n) {
                     return changeMapPosition(_U.replace([["moveX"
-                                                         ,mState.moveX + n]],
+                                                         ,mState.moveX + n / Basics.sqrt(currentZoom)]],
                     mState));
                  };
                  var moveMapY = function (n) {
                     return changeMapPosition(_U.replace([["moveY"
-                                                         ,mState.moveY + n]],
+                                                         ,mState.moveY + n / Basics.sqrt(currentZoom)]],
                     mState));
+                 };
+                 var zoomMap = function (f) {
+                    return function () {
+                       var vpX = vState.mapSize.width;
+                       var vpY = vState.mapSize.height;
+                       var oldY = mState.moveY;
+                       var newY = (f - 1) * vpY * 0.5 - oldY * f;
+                       var oldX = mState.moveX;
+                       var newX = (f - 1) * vpX * 0.5 - oldX * f;
+                       var newZoom = currentZoom * f;
+                       var newPositions = _U.replace([["zoomLevel"
+                                                      ,newZoom]
+                                                     ,["moveX",0 - newX]
+                                                     ,["moveY",0 - newY]],
+                       mState);
+                       return changeMapPosition(newPositions);
+                    }();
                  };
                  return function () {
                     switch (action._0.ctor)
@@ -1997,11 +2057,11 @@ Elm.Index.make = function (_elm) {
                        case "MoveUp":
                        return moveMapY(100);
                        case "ZoomIn":
-                       return zoomMap(1.1);
+                       return zoomMap(zoomFactor);
                        case "ZoomOut":
-                       return zoomMap(1 / 1.1);}
+                       return zoomMap(1 / zoomFactor);}
                     _E.Case($moduleName,
-                    "between lines 114 and 121");
+                    "between lines 131 and 138");
                  }();
               }();
             case "NoOp": return state;
@@ -2031,7 +2091,7 @@ Elm.Index.make = function (_elm) {
             _L.fromArray([]),
             _L.fromArray([A2(Html.Events.onclick,
             actions.handle,
-            function (_v4) {
+            function (_v10) {
                return function () {
                   return SetFocus(f);
                }();
@@ -2043,21 +2103,21 @@ Elm.Index.make = function (_elm) {
             state,
             f) ? "active" : "";
          };
-         var createTabLi = function (_v6) {
+         var createTabLi = function (_v12) {
             return function () {
-               switch (_v6.ctor)
+               switch (_v12.ctor)
                {case "_Tuple2":
                   return A4(Html.node,
                     "li",
                     _L.fromArray([A2(Html._op[":="],
                     "className",
-                    activeIfFocus(_v6._0))]),
+                    activeIfFocus(_v12._0))]),
                     _L.fromArray([]),
                     _L.fromArray([A2(linkTag,
-                    _v6._0,
-                    _v6._1)]));}
+                    _v12._0,
+                    _v12._1)]));}
                _E.Case($moduleName,
-               "between lines 150 and 151");
+               "between lines 167 and 168");
             }();
          };
          return A4(Html.node,
@@ -2096,8 +2156,11 @@ Elm.Index.make = function (_elm) {
          return _L.fromArray([A4(Html.node,
          "div",
          _L.fromArray([A2(Html._op[":="],
-         "className",
-         "map")]),
+                      "className",
+                      "map")
+                      ,A2(Html._op[":="],
+                      "id",
+                      "map-container")]),
          _L.fromArray([]),
          _L.fromArray([A4(Html.node,
                       "div",
@@ -2120,7 +2183,7 @@ Elm.Index.make = function (_elm) {
                                    _L.fromArray([]),
                                    _L.fromArray([A2(Html.Events.onclick,
                                    actions.handle,
-                                   function (_v10) {
+                                   function (_v16) {
                                       return function () {
                                          return MapZoom(ZoomIn);
                                       }();
@@ -2137,7 +2200,7 @@ Elm.Index.make = function (_elm) {
                                    _L.fromArray([]),
                                    _L.fromArray([A2(Html.Events.onclick,
                                    actions.handle,
-                                   function (_v12) {
+                                   function (_v18) {
                                       return function () {
                                          return MapZoom(ZoomOut);
                                       }();
@@ -2154,7 +2217,7 @@ Elm.Index.make = function (_elm) {
                                    _L.fromArray([]),
                                    _L.fromArray([A2(Html.Events.onclick,
                                    actions.handle,
-                                   function (_v14) {
+                                   function (_v20) {
                                       return function () {
                                          return MapZoom(MoveUp);
                                       }();
@@ -2171,7 +2234,7 @@ Elm.Index.make = function (_elm) {
                                    _L.fromArray([]),
                                    _L.fromArray([A2(Html.Events.onclick,
                                    actions.handle,
-                                   function (_v16) {
+                                   function (_v22) {
                                       return function () {
                                          return MapZoom(MoveDown);
                                       }();
@@ -2188,7 +2251,7 @@ Elm.Index.make = function (_elm) {
                                    _L.fromArray([]),
                                    _L.fromArray([A2(Html.Events.onclick,
                                    actions.handle,
-                                   function (_v18) {
+                                   function (_v24) {
                                       return function () {
                                          return MapZoom(MoveLeft);
                                       }();
@@ -2205,7 +2268,7 @@ Elm.Index.make = function (_elm) {
                                    _L.fromArray([]),
                                    _L.fromArray([A2(Html.Events.onclick,
                                    actions.handle,
-                                   function (_v20) {
+                                   function (_v26) {
                                       return function () {
                                          return MapZoom(MoveRight);
                                       }();
@@ -2260,22 +2323,25 @@ Elm.Index.make = function (_elm) {
                                 mapHtml(state))]))]));
    };
    var scene = F2(function (state,
-   _v22) {
+   _v28) {
       return function () {
-         switch (_v22.ctor)
+         switch (_v28.ctor)
          {case "_Tuple2":
             return A4(Graphics.Element.container,
-              _v22._0,
-              _v22._1,
+              _v28._0,
+              _v28._1,
               Graphics.Element.midTop,
               A3(Html.toElement,
-              _v22._0,
-              _v22._1,
+              _v28._0,
+              _v28._1,
               view(state)));}
          _E.Case($moduleName,
-         "on line 238, column 5 to 57");
+         "on line 255, column 5 to 57");
       }();
    });
+   var signals = A2(Signal.merge,
+   actions.signal,
+   mapResizedActions);
    var emptyVisualState = {_: {}
                           ,mainFocus: "map"
                           ,mapPosition: {_: {}
@@ -2283,8 +2349,8 @@ Elm.Index.make = function (_elm) {
                                         ,moveY: 0
                                         ,zoomLevel: 1}
                           ,mapSize: {_: {}
-                                    ,height: 0
-                                    ,width: 0}};
+                                    ,height: 500
+                                    ,width: 1000}};
    var emptyMapState = function () {
       var faerunBackground = {_: {}
                              ,height: 3030
@@ -2307,7 +2373,7 @@ Elm.Index.make = function (_elm) {
    var state = A3(Signal.foldp,
    step,
    startingState,
-   actions.signal);
+   signals);
    var main = A3(Signal.lift2,
    scene,
    state,
@@ -2332,7 +2398,7 @@ Elm.Index.make = function (_elm) {
                            ,mapSize: {height: v.visualState.mapSize.height
                                      ,width: v.visualState.mapSize.width}}};
    }),
-   state);
+   Signal.constant(emptyState));
    var Background = F4(function (a,
    b,
    c,
@@ -2388,13 +2454,16 @@ Elm.Index.make = function (_elm) {
                        ,main: main
                        ,scene: scene
                        ,state: state
+                       ,signals: signals
                        ,startingState: startingState
                        ,actions: actions
+                       ,mapResizedActions: mapResizedActions
                        ,$undefined: $undefined
                        ,NoOp: NoOp
                        ,SetMapBackround: SetMapBackround
                        ,SetFocus: SetFocus
                        ,MapZoom: MapZoom
+                       ,MapResized: MapResized
                        ,ZoomIn: ZoomIn
                        ,ZoomOut: ZoomOut
                        ,MoveUp: MoveUp

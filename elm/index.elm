@@ -69,7 +69,7 @@ emptyMapState =
 emptyVisualState : VisualState
 emptyVisualState = { mainFocus = "map"
                    , mapPosition = { zoomLevel = 1 , moveX = 0 , moveY = 0 }
-                   , mapSize = { width = 0, height = 0 }
+                   , mapSize = { width = 1000, height = 500 }
                    }
 
 ---- UPDATE -----
@@ -79,6 +79,7 @@ data Action
     | SetMapBackround String
     | SetFocus String
     | MapZoom MapZoomAction
+    | MapResized Float Float
 
 data MapZoomAction
     = ZoomIn
@@ -100,20 +101,36 @@ step action state =
     SetFocus f ->
         let vState = state.visualState
         in { state | visualState <- { vState | mainFocus <- f } } 
+    MapResized h w ->
+        let vState = state.visualState
+            mState = vState.mapSize
+            changeMapSize ms = { state | visualState <- { vState | mapSize <- ms} }
+        in changeMapSize { mState | height <- h, width <- w }
     MapZoom zoomAction ->
         let vState = state.visualState
             mState = vState.mapPosition
-            currentLevel = mState.zoomLevel
-            changeMapPosition mp =
-                { state | visualState <- { vState | mapPosition <- mp} }
+            currentZoom = mState.zoomLevel
+            changeMapPosition mp = { state | visualState <- { vState | mapPosition <- mp} }
             zoomMap : Float -> State
-            zoomMap f = changeMapPosition { mState | zoomLevel <- (currentLevel * f) }
-            moveMapX n = changeMapPosition { mState | moveX <- (mState.moveX + n) }
-            moveMapY n = changeMapPosition { mState | moveY <- (mState.moveY + n) }
+            zoomMap f =
+                let newZoom = currentZoom * f
+                    oldX = mState.moveX
+                    oldY = mState.moveY
+                    vpY = vState.mapSize.height
+                    vpX = vState.mapSize.width
+                    newX = (f - 1) * vpX * 0.5 - oldX * (f)
+                    newY = (f - 1) * vpY * 0.5 - oldY * (f)
+                    -- newX = (newZoom - currentZoom) * vpX * 0.5 - oldX * (newZoom - currentZoom)
+                    -- newY = (newZoom - currentZoom) * vpY * 0.5 - oldY * (newZoom - currentZoom)
+                    newPositions = { mState | zoomLevel <- newZoom, moveX <- -newX, moveY <- -newY }
+                in changeMapPosition newPositions
+            moveMapX n = changeMapPosition { mState | moveX <- mState.moveX + ( n / (sqrt currentZoom) ) }
+            moveMapY n = changeMapPosition { mState | moveY <- mState.moveY + ( n / (sqrt currentZoom) ) }
+            zoomFactor = 1.2
         in
         case zoomAction of
-          ZoomIn -> zoomMap 1.1
-          ZoomOut -> zoomMap (1/1.1)
+          ZoomIn -> zoomMap zoomFactor
+          ZoomOut -> zoomMap (1/zoomFactor)
           MoveUp -> moveMapY 100
           MoveRight -> moveMapX -100
           MoveDown -> moveMapY -100
@@ -169,7 +186,7 @@ mapHtml state =
         scale = "scale(" ++ (show scaleFactor) ++")"
         transform = join " " [translate, scale]
     in 
-    [ node "div" ["className" := "map"] []
+    [ node "div" ["className" := "map", "id" := "map-container"] []
         [ node "div" ["className" := "map-controls"] []
             [ node "div" [] []
                 [ eventNode "a" ["href" := "javascript:void(0)", "className" := "control fa fa-plus"] []
@@ -239,7 +256,9 @@ scene state (w,h) =
 
 -- manage the state of our application over time
 state : Signal State
-state = foldp step startingState actions.signal
+state = foldp step startingState signals
+
+signals = merge actions.signal mapResizedActions
 
 -- load state from local storage or from the server
 startingState : State
@@ -249,6 +268,8 @@ startingState = Maybe.maybe emptyState id getStorage
 actions : Input Action
 actions = Input.input NoOp
 
+mapResizedActions : Signal Action
+mapResizedActions = lift (\(h, w) -> MapResized h w) getMapElementSize
 
 -- interactions with localStorage to save app state (type alias support coming soon!)
 port getStorage : Maybe 
@@ -272,7 +293,12 @@ port setStorage : Signal
                         , mapSize: { height: Float, width: Float }
                         }
          }
-port setStorage = state
+port setStorage = constant emptyState
+
+port getMapElementSize : Signal (Float, Float)
+
+port log : Signal String
+port log = lift show getMapElementSize                 
 
 -- WebSocket connection to the server for actions transmissions
 -- socket = WebSocket.connect "ws://127.0.0.1:3000" (constant "no name")
