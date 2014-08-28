@@ -293,7 +293,7 @@ port setStorage : Signal
                         , mapSize: { height: Float, width: Float }
                         }
          }
-port setStorage = constant emptyState
+port setStorage = state
 
 port getMapElementSize : Signal (Float, Float)
 

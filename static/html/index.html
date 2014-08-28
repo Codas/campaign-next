@@ -40,8 +40,8 @@
  }
 
 var storedState = localStorage.getItem('campaign-next');
-// var startingState = storedState ? JSON.parse(storedState) : null;
-var startingState = null
+var startingState = storedState ? JSON.parse(storedState) : null
+// var startingState = null
 
 var campaignNext = Elm.fullscreen(Elm.Index, {
    getStorage: startingState,

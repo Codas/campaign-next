@@ -2398,7 +2398,7 @@ Elm.Index.make = function (_elm) {
                            ,mapSize: {height: v.visualState.mapSize.height
                                      ,width: v.visualState.mapSize.width}}};
    }),
-   Signal.constant(emptyState));
+   state);
    var Background = F4(function (a,
    b,
    c,
