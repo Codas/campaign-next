@@ -8,3 +8,7 @@ watch(%r{elm/([^.].*\.elm)}) do |m|
     `elm --make --set-runtime="static/js/elm-runtime.js" -b ../static/js -c ../static/tmp --only-js #{m[1]}`
   end
 end
+
+guard 'livereload', grace_period: 0.2 do
+  watch(%r{static/.+\.(css|js|html)})
+end
