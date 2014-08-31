@@ -144,7 +144,7 @@ view : State -> Html
 view state =
     node "div" ["className" := "vbox viewport"] []
       [ tabBarHtml state
-          [ ("charSheets", "Character Sheets")
+          [ ("charSheet", "Character Sheet")
           , ("map", "Map")
           ]
       , node "div" ["className" := "tab-content main hbox space-between"] []
@@ -171,7 +171,7 @@ tabBarHtml state cs =
 
 charSheetHtml : State -> [Html]
 charSheetHtml state =
-    [text "CharSheet"]
+    [text "Character Sheet"]
 
 mapHtml : State -> [Html]
 mapHtml state =

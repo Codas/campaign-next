@@ -1941,7 +1941,7 @@ Elm.Index.make = function (_elm) {
       cs);
    });
    var charSheetHtml = function (state) {
-      return _L.fromArray([Html.text("CharSheet")]);
+      return _L.fromArray([Html.text("Character Sheet")]);
    };
    var setBackround = F2(function (bg,
    map) {
@@ -2304,8 +2304,8 @@ Elm.Index.make = function (_elm) {
       _L.fromArray([A2(tabBarHtml,
                    state,
                    _L.fromArray([{ctor: "_Tuple2"
-                                 ,_0: "charSheets"
-                                 ,_1: "Character Sheets"}
+                                 ,_0: "charSheet"
+                                 ,_1: "Character Sheet"}
                                 ,{ctor: "_Tuple2"
                                  ,_0: "map"
                                  ,_1: "Map"}]))
