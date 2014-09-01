@@ -1941,7 +1941,20 @@ Elm.Index.make = function (_elm) {
       cs);
    });
    var charSheetHtml = function (state) {
-      return _L.fromArray([Html.text("Character Sheet")]);
+      return _L.fromArray([A4(Html.node,
+                          "div",
+                          _L.fromArray([A2(Html._op[":="],
+                          "className",
+                          "character-name")]),
+                          _L.fromArray([]),
+                          _L.fromArray([Html.text("Geralt of Rivia")]))
+                          ,A4(Html.node,
+                          "div",
+                          _L.fromArray([A2(Html._op[":="],
+                          "className",
+                          "character-name-label")]),
+                          _L.fromArray([]),
+                          _L.fromArray([Html.text("Character Name")]))]);
    };
    var setBackround = F2(function (bg,
    map) {
@@ -1970,7 +1983,7 @@ Elm.Index.make = function (_elm) {
               _v0._0,
               _v0._1);}
          _E.Case($moduleName,
-         "on line 272, column 38 to 52");
+         "on line 275, column 38 to 52");
       }();
    },
    getMapElementSize);
@@ -2336,7 +2349,7 @@ Elm.Index.make = function (_elm) {
               _v28._1,
               view(state)));}
          _E.Case($moduleName,
-         "on line 255, column 5 to 57");
+         "on line 258, column 5 to 57");
       }();
    });
    var signals = A2(Signal.merge,

@@ -171,7 +171,10 @@ tabBarHtml state cs =
 
 charSheetHtml : State -> [Html]
 charSheetHtml state =
-    [text "Character Sheet"]
+    [
+        node "div" ["className" := "character-name"] [] [text "Geralt of Rivia"],
+        node "div" ["className" := "character-name-label"] [] [text "Character Name"]
+    ]
 
 mapHtml : State -> [Html]
 mapHtml state =
