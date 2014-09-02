@@ -1945,16 +1945,337 @@ Elm.Index.make = function (_elm) {
                           "div",
                           _L.fromArray([A2(Html._op[":="],
                           "className",
-                          "character-name")]),
+                          "line")]),
                           _L.fromArray([]),
-                          _L.fromArray([Html.text("Geralt of Rivia")]))
+                          _L.fromArray([A4(Html.node,
+                                       "dl",
+                                       _L.fromArray([A2(Html._op[":="],
+                                       "className",
+                                       "character-name")]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Character name")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Geralt of Rivia")]))]))
+                                       ,A4(Html.node,
+                                       "dl",
+                                       _L.fromArray([A2(Html._op[":="],
+                                       "className",
+                                       "character-info")]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Class & Level")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Level 3 Witcher")]))
+                                                    ,A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Background")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Monster Hunter")]))
+                                                    ,A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Player Name")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Andrzej Sapkowskis")]))]))
+                                       ,A4(Html.node,
+                                       "dl",
+                                       _L.fromArray([A2(Html._op[":="],
+                                       "className",
+                                       "character-info")]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Race")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Human")]))
+                                                    ,A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Alignment")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Lawful Neutral")]))
+                                                    ,A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Experience Points")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("3000")]))]))]))
                           ,A4(Html.node,
                           "div",
                           _L.fromArray([A2(Html._op[":="],
                           "className",
-                          "character-name-label")]),
+                          "column")]),
                           _L.fromArray([]),
-                          _L.fromArray([Html.text("Character Name")]))]);
+                          _L.fromArray([A4(Html.node,
+                          "div",
+                          _L.fromArray([A2(Html._op[":="],
+                          "className",
+                          "attributes")]),
+                          _L.fromArray([]),
+                          _L.fromArray([A4(Html.node,
+                                       "dt",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("Strength")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("14")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("+2")]))
+                                       ,A4(Html.node,
+                                       "dt",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("Dexterity")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("16")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("+3")]))
+                                       ,A4(Html.node,
+                                       "dt",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("Constitution")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("16")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("+3")]))
+                                       ,A4(Html.node,
+                                       "dt",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("Intelligence")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("15")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("+2")]))
+                                       ,A4(Html.node,
+                                       "dt",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("Wisdom")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("11")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("+0")]))
+                                       ,A4(Html.node,
+                                       "dt",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("Charisma")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("14")]))
+                                       ,A4(Html.node,
+                                       "dd",
+                                       _L.fromArray([]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([Html.text("+2")]))]))]))
+                          ,A4(Html.node,
+                          "div",
+                          _L.fromArray([A2(Html._op[":="],
+                          "className",
+                          "column")]),
+                          _L.fromArray([]),
+                          _L.fromArray([A4(Html.node,
+                                       "dl",
+                                       _L.fromArray([A2(Html._op[":="],
+                                       "className",
+                                       "inspiration")]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Insipration")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("No")]))]))
+                                       ,A4(Html.node,
+                                       "dl",
+                                       _L.fromArray([A2(Html._op[":="],
+                                       "className",
+                                       "proficiency-bonus")]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Proficiency Bonus")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("+2")]))]))
+                                       ,A4(Html.node,
+                                       "dl",
+                                       _L.fromArray([A2(Html._op[":="],
+                                       "className",
+                                       "saving-throws")]),
+                                       _L.fromArray([]),
+                                       _L.fromArray([A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Strength")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("J")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("+4")]))
+                                                    ,A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Dexterity")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("N")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("+4")]))
+                                                    ,A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Constitution")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("J")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("+6")]))
+                                                    ,A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Intelligence")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("N")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("+2")]))
+                                                    ,A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Wisdom")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("N")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("+0")]))
+                                                    ,A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Charisma")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("N")]))
+                                                    ,A4(Html.node,
+                                                    "dd",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("+2")]))
+                                                    ,A4(Html.node,
+                                                    "dt",
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([]),
+                                                    _L.fromArray([Html.text("Saving Throws")]))]))]))]);
    };
    var setBackround = F2(function (bg,
    map) {
@@ -1983,7 +2304,7 @@ Elm.Index.make = function (_elm) {
               _v0._0,
               _v0._1);}
          _E.Case($moduleName,
-         "on line 275, column 38 to 52");
+         "on line 348, column 38 to 52");
       }();
    },
    getMapElementSize);
@@ -2349,7 +2670,7 @@ Elm.Index.make = function (_elm) {
               _v28._1,
               view(state)));}
          _E.Case($moduleName,
-         "on line 258, column 5 to 57");
+         "on line 331, column 5 to 57");
       }();
    });
    var signals = A2(Signal.merge,
