@@ -172,8 +172,81 @@ tabBarHtml state cs =
 charSheetHtml : State -> [Html]
 charSheetHtml state =
     [
-        node "div" ["className" := "character-name"] [] [text "Geralt of Rivia"],
-        node "div" ["className" := "character-name-label"] [] [text "Character Name"]
+      node "div" ["className" := "line"] [] [
+        node "dl" ["className" := "character-name"] [] [
+          node "dt" [] [] [text "Character name"],
+          node "dd" [] [] [text "Geralt of Rivia"]
+        ],
+        node "dl" ["className" := "character-info"] [] [
+          node "dt" [] [] [text "Class & Level"],
+          node "dd" [] [] [text "Level 3 Witcher"],
+          node "dt" [] [] [text "Background"],
+          node "dd" [] [] [text "Monster Hunter"],
+          node "dt" [] [] [text "Player Name"],
+          node "dd" [] [] [text "Andrzej Sapkowskis"]
+        ],
+        node "dl" ["className" := "character-info"] [] [
+          node "dt" [] [] [text "Race"],
+          node "dd" [] [] [text "Human"],
+          node "dt" [] [] [text "Alignment"],
+          node "dd" [] [] [text "Lawful Neutral"],
+          node "dt" [] [] [text "Experience Points"],
+          node "dd" [] [] [text "3000"]
+        ]
+      ],
+      node "div" ["className" := "column"] [] [
+        node "div" ["className" := "attributes"] [] [
+          node "dt" [] [] [text "Strength"],
+          node "dd" [] [] [text "14"],
+          node "dd" [] [] [text "+2"],
+          node "dt" [] [] [text "Dexterity"],
+          node "dd" [] [] [text "16"],
+          node "dd" [] [] [text "+3"],
+          node "dt" [] [] [text "Constitution"],
+          node "dd" [] [] [text "16"],
+          node "dd" [] [] [text "+3"],
+          node "dt" [] [] [text "Intelligence"],
+          node "dd" [] [] [text "15"],
+          node "dd" [] [] [text "+2"],
+          node "dt" [] [] [text "Wisdom"],
+          node "dd" [] [] [text "11"],
+          node "dd" [] [] [text "+0"],
+          node "dt" [] [] [text "Charisma"],
+          node "dd" [] [] [text "14"],
+          node "dd" [] [] [text "+2"]
+        ]
+      ],
+      node "div" ["className" := "column"] [] [
+        node "dl" ["className" := "inspiration"] [] [
+          node "dt" [] [] [text "Insipration"],
+          node "dd" [] [] [text "No"]
+        ],
+        node "dl" ["className" := "proficiency-bonus"] [] [
+          node "dt" [] [] [text "Proficiency Bonus"],
+          node "dd" [] [] [text "+2"]
+        ],
+        node "dl" ["className" := "saving-throws"] [] [
+          node "dt" [] [] [text "Strength"],
+          node "dd" [] [] [text "J"],
+          node "dd" [] [] [text "+4"],
+          node "dt" [] [] [text "Dexterity"],
+          node "dd" [] [] [text "N"],
+          node "dd" [] [] [text "+4"],
+          node "dt" [] [] [text "Constitution"],
+          node "dd" [] [] [text "J"],
+          node "dd" [] [] [text "+6"],
+          node "dt" [] [] [text "Intelligence"],
+          node "dd" [] [] [text "N"],
+          node "dd" [] [] [text "+2"],
+          node "dt" [] [] [text "Wisdom"],
+          node "dd" [] [] [text "N"],
+          node "dd" [] [] [text "+0"],
+          node "dt" [] [] [text "Charisma"],
+          node "dd" [] [] [text "N"],
+          node "dd" [] [] [text "+2"],
+          node "dt" [] [] [text "Saving Throws"]
+        ]
+      ]
     ]
 
 mapHtml : State -> [Html]
