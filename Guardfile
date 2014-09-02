@@ -12,3 +12,8 @@ end
 guard 'livereload', grace_period: 0.2 do
   watch(%r{static/.+\.(css|js|html)})
 end
+
+guard :less, output: 'static/css/' do
+  watch %r{^static/less/([^/]+\.less)$}
+  watch %r{^static/less/bootstrap/bootstrap\.less$}
+end

@@ -1,9 +1,18 @@
+GIT
+  remote: https://github.com/Codas/guard-less
+  revision: 5747e2e0ea5bd844038f10d864d2cd8ff8861ba3
+  specs:
+    guard-less (1.0.0)
+      guard (~> 2.6)
+      less (~> 2.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
     celluloid (0.15.2)
       timers (~> 1.1.0)
     coderay (1.1.0)
+    commonjs (0.2.7)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -21,6 +30,9 @@ GEM
       guard (~> 2.0)
       multi_json (~> 1.8)
     http_parser.rb (0.6.0)
+    less (2.6.0)
+      commonjs (~> 0.2.7)
+    libv8 (3.16.14.3)
     listen (2.7.9)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -35,7 +47,11 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    ref (1.0.5)
     slop (3.6.0)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     timers (1.1.0)
 
@@ -44,4 +60,6 @@ PLATFORMS
 
 DEPENDENCIES
   guard
+  guard-less!
   guard-livereload
+  therubyracer

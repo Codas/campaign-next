@@ -16,3 +16,6 @@ cabal.sandbox.config
 
 elm/elm_dependencies/*
 elm/cache
+
+.ruby-version
+.ruby-gemset
